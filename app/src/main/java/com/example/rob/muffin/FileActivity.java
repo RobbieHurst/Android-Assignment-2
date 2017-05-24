@@ -15,7 +15,7 @@ public class FileActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fileLayout);
+        setContentView(R.layout.file_layout);
     }
 
 }
