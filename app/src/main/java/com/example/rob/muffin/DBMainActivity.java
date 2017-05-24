@@ -8,13 +8,14 @@ import android.widget.Button;
  * Created by roberthurst on 24/05/2017.
  */
 
-public class App2Activity extends Activity {
+public class DBMainActivity extends Activity {
 
     Button button;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main2);
+        setContentView(R.layout.dataBaseLayout);
     }
+
 }

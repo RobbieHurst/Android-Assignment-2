@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View arg0) {
 
-                Intent intent = new Intent(context, App2Activity.class);
+                Intent intent = new Intent(context, FileActivity.class);
                 startActivity(intent);
 
             }
@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
         secondButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, App3Activity.class);
+                Intent intent = new Intent(context, DBMainActivity.class);
                 startActivity(intent);
             }
         });
