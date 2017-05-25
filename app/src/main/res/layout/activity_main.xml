@@ -16,20 +16,20 @@
             android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I&apos;m screen 1 (main.xml)"
+            android:text="Assignment 2"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Click me to another screen" />
+            android:text="File" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Tap me for screen 3"/>
+            android:text="Database"/>
 
     </LinearLayout>
 

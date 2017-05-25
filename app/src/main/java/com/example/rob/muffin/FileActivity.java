@@ -1,6 +1,8 @@
 package com.example.rob.muffin;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +30,8 @@ public class FileActivity extends Activity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
     private List<Restaurant> list = new ArrayList<Restaurant>();
-
+    Button addButton;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class FileActivity extends Activity {
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
+        addListenerOnButton();
+
+
     }
     @Override
     protected void onResume() {
@@ -56,6 +62,25 @@ public class FileActivity extends Activity {
             }
         });
     }
+    public void addListenerOnButton() {
+
+        final Context context = this;
+
+        addButton = (Button) findViewById(R.id.btnAdd);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, addRestaurant.class);
+                startActivity(intent);
+
+            }
+
+        });
+
+    }
 
     private ArrayList<DataObject> getDataSet() {
         ArrayList results = new ArrayList<DataObject>();
@@ -65,7 +90,7 @@ public class FileActivity extends Activity {
             String address = list.get(index).getAddress();
             String rating = list.get(index).getRating()+"";
 
-            DataObject obj = new DataObject(name, address, rating);
+            DataObject obj = new DataObject("Name: "+name,"Address: "+ address,"Rating: "+ rating);
             results.add(index, obj);
         }
         return results;
