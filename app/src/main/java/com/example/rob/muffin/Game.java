@@ -8,8 +8,7 @@ public class Game {
 
     private String name;
     private String publisher;
-    private int rating;
-
+    private String rating;
 
     public String getName() {
         return name;
@@ -27,11 +26,11 @@ public class Game {
         this.publisher = publisher;
     }
 
-    public int getRating() {
+    public String  getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 }

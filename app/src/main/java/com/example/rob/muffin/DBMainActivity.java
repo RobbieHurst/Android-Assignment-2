@@ -1,6 +1,8 @@
 package com.example.rob.muffin;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,7 +31,8 @@ public class DBMainActivity extends Activity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
-    private List<Restaurant> list = new ArrayList<Restaurant>();
+    private List<Game> list = new ArrayList<Game>();
+    Button addButton;
 
 
     @Override
@@ -38,10 +41,8 @@ public class DBMainActivity extends Activity {
         setContentView(R.layout.database_main_layout);
 
         dbAdapter = new DBAdapter(this);
-        nameOfTeamEdt = (EditText) findViewById(R.id.edtTeamName);
-        positionEdt = (EditText) findViewById(R.id.edtPosition);
-        pointsEdt = (EditText) findViewById(R.id.edtPoints);
-        idEdt = (EditText) findViewById(R.id.edtID);
+
+        DisplayGames();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -50,13 +51,41 @@ public class DBMainActivity extends Activity {
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
+        addListenerOnButton();
+
+    }
+
+    public void addListenerOnButton() {
+
+        final Context context = this;
+
+        addButton = (Button) findViewById(R.id.btnAdd);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, addGame.class);
+//                intent.putExtra(SELECTED_ID, getLastId());
+//                intent.putExtra(SELECTED_NAME, "");
+//                intent.putExtra(SELECTED_ADDRESS,"");
+//                intent.putExtra(SELECTED_RATING, "");
+//                intent.putExtra(ISSELECTED,"false");
+                startActivity(intent);
+                finish();
+
+            }
+
+        });
+
     }
     private ArrayList<DataObject> getDataSet() {
         ArrayList results = new ArrayList<DataObject>();
         for (int index = 0; index < list.size(); index++) {
 
             String name = list.get(index).getName();
-            String address = list.get(index).getAddress();
+            String address = list.get(index).getPublisher();
             String rating = list.get(index).getRating()+"";
 
             DataObject obj = new DataObject("Game Name: "+name,"Publisher: "+ address,"Rating: "+ rating);
@@ -65,98 +94,27 @@ public class DBMainActivity extends Activity {
         return results;
     }
 
-    public void AddGameTap(View v)
+    public void DisplayGames()
     {
-        dbAdapter.open();
-        if(dbAdapter.insertTeam(nameOfTeamEdt.getText().toString(),positionEdt.getText().toString(),pointsEdt.getText().toString())!= -1)
-        {
-            Toast.makeText(this, "Add Successful", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            Toast.makeText(this, "Add unSuccessful", Toast.LENGTH_LONG).show();
-        }
-        dbAdapter.close();
-    }
+        Cursor cursor = dbAdapter.getAllGames();
 
-    public void ShowGameTap(View v)
-    {
-        dbAdapter.open();
-        Cursor dbCursor = dbAdapter.getAllTeams();
-        String allTeamRecords = "";
+        cursor.moveToFirst();
 
-        if(dbCursor.moveToFirst())
-        {
-            do
-            {
-                allTeamRecords += "id: " + dbCursor.getInt(0) +
-                        "Name: " +  dbCursor.getString(1) +
-                        "Position: " +  dbCursor.getString(2) +
-                        "Points: " +  dbCursor.getString(3) + "\n";
-            }
-            while(dbCursor.moveToNext());
+        while(!cursor.isAfterLast()){
+
+            Game game = new Game();
+
+            game.setName(cursor.getString(cursor.getColumnIndex("gameName")));
+            game.setPublisher(cursor.getString(cursor.getColumnIndex("publisher")));
+            game.setRating(cursor.getString(cursor.getColumnIndex("rating")));
+            list.add(game);
+
+            cursor.moveToNext();
         }
-        DisplayGames(allTeamRecords);
-        dbAdapter.close();
-    }
 
-    public void DisplayGames(String teams)
-    {
+        cursor.close();
 
-        Toast.makeText(this,teams,Toast.LENGTH_LONG).show();
-    }
-
-    public void EditTeamGame(View view)
-    {
-        dbAdapter.open();
-        if(dbAdapter.updateTeam(Long.parseLong(idEdt.getText().toString()),nameOfTeamEdt.getText().toString(),
-                positionEdt.getText().toString(),pointsEdt.getText().toString()))
-        {
-            Toast.makeText(this, "Update Successful", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            Toast.makeText(this, "Update Unsuccessful", Toast.LENGTH_LONG).show();
-        }
-        dbAdapter.close();
-    }
-
-    public void DeleteGameTap(View view)
-    {
-        dbAdapter.open();
-        if(dbAdapter.deleteTeam(Long.parseLong(idEdt.getText().toString())))
-        {
-            Toast.makeText(this, "Record Deleted", Toast.LENGTH_LONG).show();
-        }
-        else
-        {
-            Toast.makeText(this, "Update Deleted", Toast.LENGTH_LONG).show();
-        }
-        dbAdapter.close();
-    }
-
-    public void SearchGameTap(View view)
-    {
-        Toast.makeText(this,idEdt.getText().toString(),Toast.LENGTH_LONG).show();
-        dbAdapter.open();
-        Cursor getTeamCursor = dbAdapter.getTeam(Long.parseLong(idEdt.getText().toString()));
-
-        if(getTeamCursor.getCount() > 0)
-        {
-            displayTeam(getTeamCursor);
-        }
-        else
-        {
-            Toast.makeText(this, "Game Does not Exist", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void displayTeam(Cursor curTeam)
-    {
-        idEdt.setText(String.valueOf(curTeam.getInt(0)));
-        nameOfTeamEdt.setText(curTeam.getString(1));
-        positionEdt.setText(curTeam.getString(2));
-        pointsEdt.setText(curTeam.getString(3));
+        //Toast.makeText(this,teams,Toast.LENGTH_LONG).show();
     }
 
 }
