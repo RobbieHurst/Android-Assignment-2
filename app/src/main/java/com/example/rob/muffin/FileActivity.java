@@ -30,10 +30,10 @@ public class FileActivity extends Activity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
     private List<Restaurant> list = new ArrayList<Restaurant>();
-    private String SELECTED_ID;
-    private String SELECTED_NAME;
-    private String SELECTED_ADDRESS;
-    private String SELECTED_RATING;
+    public static String SELECTED_ID;
+    public static String SELECTED_NAME;
+    public static String SELECTED_ADDRESS;
+    public static String SELECTED_RATING;
     Button addButton;
 
 
@@ -63,8 +63,23 @@ public class FileActivity extends Activity {
             @Override
             public void onItemClick(int position, View v) {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
+                SELECTED_ID = list.get(position).getId();
+                SELECTED_NAME = list.get(position).getName();
+                SELECTED_ADDRESS = list.get(position).getAddress();
+                SELECTED_RATING = list.get(position).getRating()+"";
+                itemTap();
             }
         });
+    }
+    public void itemTap(){
+
+        Intent intent = new Intent(this, addRestaurant.class);
+        intent.putExtra(SELECTED_NAME, SELECTED_NAME);
+        intent.putExtra(SELECTED_ADDRESS,SELECTED_ADDRESS);
+        intent.putExtra(SELECTED_RATING, SELECTED_RATING);
+        startActivity(intent);
+
+
     }
     public void addListenerOnButton() {
 
@@ -78,6 +93,10 @@ public class FileActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, addRestaurant.class);
+                intent.putExtra(SELECTED_ID, "");
+                intent.putExtra(SELECTED_NAME, "");
+                intent.putExtra(SELECTED_ADDRESS,"");
+                intent.putExtra(SELECTED_RATING, "");
                 startActivity(intent);
 
             }
