@@ -30,8 +30,12 @@ public class FileActivity extends Activity {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
     private List<Restaurant> list = new ArrayList<Restaurant>();
+    private String SELECTED_ID;
+    private String SELECTED_NAME;
+    private String SELECTED_ADDRESS;
+    private String SELECTED_RATING;
     Button addButton;
-    
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

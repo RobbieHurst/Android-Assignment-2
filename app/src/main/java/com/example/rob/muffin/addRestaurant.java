@@ -7,4 +7,6 @@ import android.app.Activity;
  */
 
 public class addRestaurant extends Activity {
+
+
 }
