@@ -150,8 +150,6 @@ public class FileActivity extends Activity {
 
         try{
 
-            fileRead = new BufferedReader(new InputStreamReader(getAssets().open("Restaurant.txt")));
-
             InputStream inputStream = context.openFileInput("Restaurant.txt");
 
             if( inputStream != null ){

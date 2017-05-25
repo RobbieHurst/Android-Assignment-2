@@ -23,29 +23,29 @@ public class addRestaurant extends Activity {
     Button addButton;
     Button cancelButton;
     private String ID;
-    TextView nameTextView;
+    TextView nameTextView;          //Declaration of variables.
     TextView addressTextView;
     TextView ratingTextView;
     TextView titleTextView;
-    String newRecord;
+    String newRecord;       //String that will check if the record is new.
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {           //OnCreate that will take all the previous intents information across.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_restaurant_layout);
 
-        Intent intent = getIntent();
+        Intent intent = getIntent(); //Creating the intent object.
 
-        titleTextView = (TextView) findViewById(R.id.textViewTitle);
+        titleTextView = (TextView) findViewById(R.id.textViewTitle); //Finding the title object.
 
         String name = intent.getStringExtra(FileActivity.SELECTED_NAME);
-        String address = intent.getStringExtra(FileActivity.SELECTED_ADDRESS);
+        String address = intent.getStringExtra(FileActivity.SELECTED_ADDRESS);      //Gaing the previous intents variables.
         String rating = intent.getStringExtra(FileActivity.SELECTED_RATING);
         ID = intent.getStringExtra(FileActivity.SELECTED_ID);
 
         newRecord = intent.getStringExtra(FileActivity.ISSELECTED);
 
-        nameTextView = (TextView) findViewById(R.id.edtName);
+        nameTextView = (TextView) findViewById(R.id.edtName);       //Setting this intents textViews with the passed data.
         nameTextView.setText(name);
 
         addressTextView = (TextView) findViewById(R.id.edtAddress);
@@ -56,11 +56,11 @@ public class addRestaurant extends Activity {
 
         if(newRecord.equals("true")){
 
-            titleTextView.setText("View Review");
+            titleTextView.setText("View Review");           //Changing title if it is not new record.
 
         }
 
-        addListenerOnButton();
+        addListenerOnButton(); //Adding button listeners.
 
     }
     public void addListenerOnButton() {
@@ -68,10 +68,10 @@ public class addRestaurant extends Activity {
         final Context context = this;
 
         addButton = (Button) findViewById(R.id.btnAdd);
-        cancelButton = (Button) findViewById(R.id.btnCancel);
+        cancelButton = (Button) findViewById(R.id.btnCancel);       //Finding Buttons by ID in XML.
 
         if(newRecord.equals("true")){
-            cancelButton.setText("Back");
+            cancelButton.setText("Back");       //Changing the Cancel button to Back if it is a selected item in the list.
         }
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -81,12 +81,11 @@ public class addRestaurant extends Activity {
             @Override
             public void onClick(View v) {
 
-                Boolean check = true;
+                Boolean check = true; //Validation Boolean.
 
-
-                if(nameTextView.getText().toString().isEmpty()){
+                if(nameTextView.getText().toString().isEmpty()){ //If statements that will check if the textView is empty or does not have the correct data type.
                     check = false;
-                    nameTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                    nameTextView.setBackgroundColor(Color.parseColor("#e89795"));       //Changing the color of the text box if it is not correct.
                 }
                 else{
                     nameTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
@@ -99,7 +98,7 @@ public class addRestaurant extends Activity {
                 else{
                     addressTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
                 }
-
+                                                                        //method that will check if the text is a number.
                 if(ratingTextView.getText().toString().isEmpty() || !isNumeric(ratingTextView.getText().toString()) ){
                     check=false;
                     ratingTextView.setBackgroundColor(Color.parseColor("#e89795"));
@@ -109,6 +108,8 @@ public class addRestaurant extends Activity {
                 }
 
 
+                //Check if all the textViews are correct.
+
                 if(check == true){
 
                     String name = nameTextView.getText()+"";
@@ -116,12 +117,12 @@ public class addRestaurant extends Activity {
                     String rating = ratingTextView.getText()+"";
 
 
-                    WriteToFile(ID,name,address,rating);
+                    WriteToFile(ID,name,address,rating);    //Calling Write to file method.
 
-                    Intent intent = new Intent(context, FileActivity.class);
+                    Intent intent = new Intent(context, FileActivity.class); //Calling previous intent.
                     startActivity(intent);
 
-                    finish();
+                    finish(); //Closing this intent.
 
                 }
 
@@ -135,10 +136,10 @@ public class addRestaurant extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, FileActivity.class);
+                Intent intent = new Intent(context, FileActivity.class); //Cancel will bring back to the previous intent.
                 startActivity(intent);
 
-                finish();
+                finish(); //Closing this intent.
 
             }
 
@@ -146,12 +147,12 @@ public class addRestaurant extends Activity {
 
         if(newRecord.equalsIgnoreCase("true")){
 
-            addButton.setVisibility(View.INVISIBLE);
+            addButton.setVisibility(View.INVISIBLE);        //Making add button invisible
 
         }
 
     }
-    public static boolean isNumeric(String num){
+    public static boolean isNumeric(String num){    //Check method.
         try {
             double d = Double.parseDouble(num);
         }
@@ -162,31 +163,31 @@ public class addRestaurant extends Activity {
         return true;
     }
     @Override
-    public void onBackPressed(){
+    public void onBackPressed(){    //If back button is pressed then go back to previous intent.
         super.onBackPressed();
 
-        Intent intent = new Intent(this, FileActivity.class);
+        Intent intent = new Intent(this, FileActivity.class); //Previous intent.
         startActivity(intent);
-        finish();
+        finish(); //Closing this intent.
 
     }
-    public void WriteToFile(String ID, String name, String Address, String rating){
+    public void WriteToFile(String ID, String name, String Address, String rating){ //Write to file method.
 
-        String fileName = "Restaurant.txt";
+        String fileName = "Restaurant.txt"; //Declaring the name of the file.
 
-        File file = new File(getApplicationContext().getFilesDir(), fileName);
+        File file = new File(getApplicationContext().getFilesDir(), fileName);      //Creating the file in the Apps Context file directory.
 
-        String writeLine = ID+1 + "," + name + "," + Address + "," + rating+"\n";
+        String writeLine = ID+1 + "," + name + "," + Address + "," + rating+"\n";  //The line that needs to be written to the file.
 
         FileOutputStream outputStream;
 
         try{
 
-            outputStream = openFileOutput(fileName,Context.MODE_APPEND);
-            outputStream.write(writeLine.getBytes());
-            outputStream.close();
+            outputStream = openFileOutput(fileName,Context.MODE_APPEND); //Appending
+            outputStream.write(writeLine.getBytes()); //Writing.
+            outputStream.close(); //Closing.
 
-            Toast.makeText(this, "File saved Successfully!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "File saved Successfully!", Toast.LENGTH_LONG).show(); //Making the user know that the record has been written.
 
 
         }
@@ -195,9 +196,4 @@ public class addRestaurant extends Activity {
         }
 
     }
-
-
-
-
-
 }

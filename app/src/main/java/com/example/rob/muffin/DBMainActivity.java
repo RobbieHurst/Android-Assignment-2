@@ -20,18 +20,18 @@ import java.util.List;
 
 public class DBMainActivity extends Activity {
 
-    //Declerations
+    //Declarations
     DBAdapter dbAdapter;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
-    private List<Game> list = new ArrayList<Game>();
+    private static String LOG_TAG = "DB Activity. ";
+    private List<Game> list = new ArrayList<Game>();    //Array of Games.
     Button addButton;
 
     public static String SELECTED_ID;
     public static String SELECTED_NAME;
-    public static String SELECTED_PUBLISHER;
+    public static String SELECTED_PUBLISHER;        //Intent variables.
     public static String SELECTED_RATING;
     public static String ISSELECTED;
 
@@ -41,24 +41,24 @@ public class DBMainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.database_main_layout);
 
-        dbAdapter = new DBAdapter(this);
+        dbAdapter = new DBAdapter(this);    //db object that will be used to communicate with the database.
 
-        DisplayGames();
+        DisplayGames();  //Method that will Find all games in the database.
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);     //Recyler View that is used for Card Views.
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
         SELECTED_ID = "";
         SELECTED_NAME = "";
-        SELECTED_PUBLISHER = "";
+        SELECTED_PUBLISHER = "";        //Ensuring that intent variables are blank on load.
         SELECTED_RATING = "";
         ISSELECTED = "true";
 
-        addListenerOnButton();
+        addListenerOnButton();          //Adding listeners to buttons.
 
     }
 
@@ -66,27 +66,27 @@ public class DBMainActivity extends Activity {
 
         final Context context = this;
 
-        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton = (Button) findViewById(R.id.btnAdd); //Finding add button by reference.
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(context, addGame.class);
+                Intent intent = new Intent(context, addGame.class);     //Creating addGame intent.
                 intent.putExtra(SELECTED_NAME, "");
-                intent.putExtra(SELECTED_PUBLISHER,"");
+                intent.putExtra(SELECTED_PUBLISHER,"");     //Sending through blank data to intent.
                 intent.putExtra(SELECTED_RATING, "");
                 intent.putExtra(ISSELECTED,"false");
                 startActivity(intent);
-                finish();
+                finish(); //Closing this intent.
 
             }
 
         });
 
     }@Override
-    protected void onResume() {
+    protected void onResume() {     //OnResume.
         super.onResume();
         ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
                 .MyClickListener() {
@@ -95,10 +95,10 @@ public class DBMainActivity extends Activity {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
                 SELECTED_ID = list.get(position).getID();
                 SELECTED_NAME = list.get(position).getName();
-                SELECTED_PUBLISHER = list.get(position).getPublisher();
+                SELECTED_PUBLISHER = list.get(position).getPublisher();     //Getting the selected item in the list.
                 SELECTED_RATING = list.get(position).getRating()+"";
                 ISSELECTED = "true";
-                itemTap();
+                itemTap(); //Calling method that will call the next intent with new intent data.
             }
         });
     }
@@ -106,51 +106,50 @@ public class DBMainActivity extends Activity {
 
         Intent intent = new Intent(this, addGame.class);
         intent.putExtra(SELECTED_ID, SELECTED_ID);
-        intent.putExtra(SELECTED_NAME, SELECTED_NAME);
+        intent.putExtra(SELECTED_NAME, SELECTED_NAME);      //calling and adding data.
         intent.putExtra(SELECTED_PUBLISHER,SELECTED_PUBLISHER);
         intent.putExtra(SELECTED_RATING, SELECTED_RATING);
         intent.putExtra(ISSELECTED,ISSELECTED);
         startActivity(intent);
-        finish();
+        finish(); //Closing this intent.
 
 
     }
-    private ArrayList<DataObject> getDataSet() {
+    private ArrayList<DataObject> getDataSet() {        //Getting dataset from the array that has been read from the data.
         ArrayList results = new ArrayList<DataObject>();
-        for (int index = 0; index < list.size(); index++) {
+        for (int index = 0; index < list.size(); index++) {     //For loop that will increment until the list is done.
 
             String name = list.get(index).getName();
-            String address = list.get(index).getPublisher();
+            String address = list.get(index).getPublisher();        //Assigning local variables for creationg of display object.
             String rating = list.get(index).getRating()+"";
 
-            DataObject obj = new DataObject("Game Name: "+name,"Publisher: "+ address,"Rating: "+ rating);
-            results.add(index, obj);
+            DataObject obj = new DataObject("Game Name: "+name,"Publisher: "+ address,"Rating: "+ rating); //Making dataobject.
+            results.add(index, obj); //Adding reults.
         }
-        return results;
+        return results; //Returning array.
     }
 
     public void DisplayGames()
     {
-        Cursor cursor = dbAdapter.getAllGames();
+        Cursor cursor = dbAdapter.getAllGames();    //Cursor from the database class.
 
-        cursor.moveToFirst();
+        cursor.moveToFirst(); //Got to first point.
 
         while(!cursor.isAfterLast()){
 
-            Game game = new Game();
+            Game game = new Game(); //Game object used to populate list.
 
             game.setID(cursor.getString(cursor.getColumnIndex("_id")));
-            game.setName(cursor.getString(cursor.getColumnIndex("gameName")));
+            game.setName(cursor.getString(cursor.getColumnIndex("gameName")));      //object variable setting.
             game.setPublisher(cursor.getString(cursor.getColumnIndex("publisher")));
             game.setRating(cursor.getString(cursor.getColumnIndex("rating")));
-            list.add(game);
+            list.add(game); //Adding to list.
 
-            cursor.moveToNext();
+            cursor.moveToNext(); //Move on.
         }
 
-        cursor.close();
+        cursor.close(); //Close cursor.
 
-        //Toast.makeText(this,teams,Toast.LENGTH_LONG).show();
     }
 
 }
