@@ -14,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by roberthurst on 24/05/2017.
@@ -25,6 +27,8 @@ public class FileActivity extends Activity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
+    private List<Restaurant> list = new ArrayList<Restaurant>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,9 +59,13 @@ public class FileActivity extends Activity {
 
     private ArrayList<DataObject> getDataSet() {
         ArrayList results = new ArrayList<DataObject>();
-        for (int index = 0; index < 20; index++) {
-            DataObject obj = new DataObject("Some Primary Text " + index,
-                    "Secondary " + index);
+        for (int index = 0; index < list.size(); index++) {
+
+            String name = list.get(index).getName();
+            String address = list.get(index).getAddress();
+            String rating = list.get(index).getRating()+"";
+
+            DataObject obj = new DataObject(name, address, rating);
             results.add(index, obj);
         }
         return results;
@@ -65,7 +73,6 @@ public class FileActivity extends Activity {
     public void readFromFile(){
 
         BufferedReader fileRead = null;
-        String textFileData = " ";
         String line;
 
         try{
@@ -73,10 +80,21 @@ public class FileActivity extends Activity {
             fileRead = new BufferedReader(new InputStreamReader(getAssets().open("Restaurant.txt")));
 
             while((line = fileRead.readLine()) != null){
-                textFileData += line + "\n";
+
+                String[] var = line.split(",");
+
+                Restaurant restaurant = new Restaurant();
+
+                restaurant.setId(var[0]);
+                restaurant.setName(var[1]);
+                restaurant.setAddress(var[2]);
+                restaurant.setRating(Integer.parseInt(var[3]));
+
+                list.add(restaurant);
+
             }
 
-            Toast.makeText(this, textFileData, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "File Read Successfully", Toast.LENGTH_LONG).show();
 
         }
         catch (IOException error){
