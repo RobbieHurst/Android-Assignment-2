@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,8 +13,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class FileActivity extends Activity {
     public static String SELECTED_NAME;
     public static String SELECTED_ADDRESS;
     public static String SELECTED_RATING;
+    public static String ISSELECTED;
     Button addButton;
 
 
@@ -42,7 +46,7 @@ public class FileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_layout);
 
-        readFromFile();
+        readFromFile(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -67,6 +71,7 @@ public class FileActivity extends Activity {
                 SELECTED_NAME = list.get(position).getName();
                 SELECTED_ADDRESS = list.get(position).getAddress();
                 SELECTED_RATING = list.get(position).getRating()+"";
+                ISSELECTED = "true";
                 itemTap();
             }
         });
@@ -74,10 +79,26 @@ public class FileActivity extends Activity {
     public void itemTap(){
 
         Intent intent = new Intent(this, addRestaurant.class);
+        intent.putExtra(SELECTED_ID, SELECTED_ID);
         intent.putExtra(SELECTED_NAME, SELECTED_NAME);
         intent.putExtra(SELECTED_ADDRESS,SELECTED_ADDRESS);
         intent.putExtra(SELECTED_RATING, SELECTED_RATING);
+        intent.putExtra(ISSELECTED,ISSELECTED);
         startActivity(intent);
+        finish();
+
+
+    }
+    public String getLastId(){
+
+        String ID = "";
+
+        for(int i = 0; i < list.size(); i++){
+
+            ID = list.get(i).getId();
+        }
+
+        return ID;
 
 
     }
@@ -93,11 +114,13 @@ public class FileActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, addRestaurant.class);
-                intent.putExtra(SELECTED_ID, "");
+                intent.putExtra(SELECTED_ID, getLastId());
                 intent.putExtra(SELECTED_NAME, "");
                 intent.putExtra(SELECTED_ADDRESS,"");
                 intent.putExtra(SELECTED_RATING, "");
+                intent.putExtra(ISSELECTED,"false");
                 startActivity(intent);
+                finish();
 
             }
 
@@ -118,7 +141,7 @@ public class FileActivity extends Activity {
         }
         return results;
     }
-    public void readFromFile(){
+    public void readFromFile(Context context){
 
         BufferedReader fileRead = null;
         String line;
@@ -127,18 +150,29 @@ public class FileActivity extends Activity {
 
             fileRead = new BufferedReader(new InputStreamReader(getAssets().open("Restaurant.txt")));
 
-            while((line = fileRead.readLine()) != null){
+            InputStream inputStream = context.openFileInput("Restaurant.txt");
 
-                String[] var = line.split(",");
+            if( inputStream != null ){
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                line = "";
 
-                Restaurant restaurant = new Restaurant();
+                StringBuilder stringBuilder = new StringBuilder();
 
-                restaurant.setId(var[0]);
-                restaurant.setName(var[1]);
-                restaurant.setAddress(var[2]);
-                restaurant.setRating(Integer.parseInt(var[3]));
+                while ((line = bufferedReader.readLine()) != null){
 
-                list.add(restaurant);
+                    String[] var = line.split(",");
+
+                    Restaurant restaurant = new Restaurant();
+
+                    restaurant.setId(var[0]);
+                    restaurant.setName(var[1]);
+                    restaurant.setAddress(var[2]);
+                    restaurant.setRating(Integer.parseInt(var[3]));
+
+                    list.add(restaurant);
+
+                }
 
             }
 
