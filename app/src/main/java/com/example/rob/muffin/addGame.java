@@ -20,6 +20,7 @@ public class addGame extends Activity {
     TextView nameTextView;
     TextView pubTextView;
     TextView ratingTextView;
+    TextView titleTextView;
     String newRecord;
     private String ID;
 
@@ -29,6 +30,8 @@ public class addGame extends Activity {
         setContentView(R.layout.add_game_layout);
 
         dbAdapter = new DBAdapter(this);
+
+        titleTextView = (TextView) findViewById(R.id.textViewTitle);
 
         Intent intent = getIntent();
 
@@ -46,6 +49,10 @@ public class addGame extends Activity {
 
         ratingTextView = (TextView) findViewById(R.id.edtRating);
         ratingTextView.setText(rating);
+
+        if(newRecord.equals("true")){
+            titleTextView.setText("Edit Game");
+        }
 
         addListenerOnButton();
 
@@ -103,8 +110,7 @@ public class addGame extends Activity {
                     finish();
 
                 }
-
-
+                
             }
 
         });
@@ -137,12 +143,20 @@ public class addGame extends Activity {
 
                 }
 
-
-
             }
 
         });
 
+    }
+    @Override
+    public void onBackPressed(){
+
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, DBMainActivity.class);
+        startActivity(intent);
+
+        finish();
     }
 
 

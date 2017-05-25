@@ -114,6 +114,15 @@ public class addRestaurant extends Activity {
         }
 
     }
+    @Override
+    public void onBackPressed(){
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, FileActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
     public void WriteToFile(String ID, String name, String Address, String rating){
 
         String fileName = "Restaurant.txt";
