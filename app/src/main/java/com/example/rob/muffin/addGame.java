@@ -3,6 +3,7 @@ package com.example.rob.muffin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -79,35 +80,106 @@ public class addGame extends Activity {
 
                 if(addButton.getText().equals("Update")){
 
-                    String name = nameTextView.getText()+"";
-                    String publisher = pubTextView.getText()+"";
-                    String rating = ratingTextView.getText()+"";
+                    Boolean check = true;
 
-                    dbAdapter.updateTeam(Long.parseLong(ID),name, publisher,rating);
+                    if(nameTextView.getText().toString().isEmpty()){
 
-                    Intent intent = new Intent(context, DBMainActivity.class);
-                    startActivity(intent);
+                        nameTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
 
-                    dbAdapter.close();
+                    }
+                    else{
 
-                    finish();
+                        nameTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+
+                    }
+
+                    if(pubTextView.getText().toString().isEmpty()){
+                        pubTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
+                    }
+                    else{
+                        pubTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+
+                    }
+
+                    if(ratingTextView.getText().toString().isEmpty() || !isNumeric(ratingTextView.getText().toString()) ){
+                        ratingTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
+                    }
+                    else{
+                        ratingTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+                    }
+
+                    if(check == true){
+
+                        String name = nameTextView.getText()+"";
+                        String publisher = pubTextView.getText()+"";
+                        String rating = ratingTextView.getText()+"";
+
+                        dbAdapter.updateTeam(Long.parseLong(ID),name, publisher,rating);
+
+                        Intent intent = new Intent(context, DBMainActivity.class);
+                        startActivity(intent);
+
+                        dbAdapter.close();
+
+                        finish();
+
+                    }
 
                 }
 
                 if(addButton.getText().equals("Add")){
 
-                    String name = nameTextView.getText()+"";
-                    String publisher = pubTextView.getText()+"";
-                    String rating = ratingTextView.getText()+"";
 
-                    dbAdapter.insertGame(name, publisher,rating);
+                    Boolean check = true;
 
-                    Intent intent = new Intent(context, DBMainActivity.class);
-                    startActivity(intent);
+                    if(nameTextView.getText().toString().isEmpty()){
 
-                    dbAdapter.close();
+                        nameTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
 
-                    finish();
+                    }
+                    else{
+
+                        nameTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+
+                    }
+
+                    if(pubTextView.getText().toString().isEmpty()){
+                        pubTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
+                    }
+                    else{
+                        pubTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+
+                    }
+
+                    if(ratingTextView.getText().toString().isEmpty() || !isNumeric(ratingTextView.getText().toString()) ){
+                        ratingTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                        check = false;
+                    }
+                    else{
+                        ratingTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+                    }
+
+                    if(check == true){
+
+                        String name = nameTextView.getText()+"";
+                        String publisher = pubTextView.getText()+"";
+                        String rating = ratingTextView.getText()+"";
+
+                        dbAdapter.insertGame(name, publisher,rating);
+
+                        Intent intent = new Intent(context, DBMainActivity.class);
+                        startActivity(intent);
+
+                        dbAdapter.close();
+
+                        finish();
+
+                    }
 
                 }
 
@@ -157,6 +229,16 @@ public class addGame extends Activity {
         startActivity(intent);
 
         finish();
+    }
+    public static boolean isNumeric(String num){
+        try {
+            double d = Double.parseDouble(num);
+        }
+        catch (NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
 
 

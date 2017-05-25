@@ -76,15 +76,36 @@ public class addRestaurant extends Activity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
-            Boolean check = true;
 
 
             @Override
             public void onClick(View v) {
 
+                Boolean check = true;
+
+
                 if(nameTextView.getText().toString().isEmpty()){
                     check = false;
                     nameTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                }
+                else{
+                    nameTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+                }
+
+                if(addressTextView.getText().toString().isEmpty()){
+                    check=false;
+                    addressTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                }
+                else{
+                    addressTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
+                }
+
+                if(ratingTextView.getText().toString().isEmpty() || !isNumeric(ratingTextView.getText().toString()) ){
+                    check=false;
+                    ratingTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                }
+                else{
+                    ratingTextView.setBackgroundColor(Color.parseColor("#8CCD8c"));
                 }
 
 
@@ -129,6 +150,16 @@ public class addRestaurant extends Activity {
 
         }
 
+    }
+    public static boolean isNumeric(String num){
+        try {
+            double d = Double.parseDouble(num);
+        }
+        catch (NumberFormatException nfe)
+        {
+            return false;
+        }
+        return true;
     }
     @Override
     public void onBackPressed(){
