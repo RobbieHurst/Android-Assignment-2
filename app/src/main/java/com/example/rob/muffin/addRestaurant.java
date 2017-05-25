@@ -3,6 +3,7 @@ package com.example.rob.muffin;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -75,20 +76,35 @@ public class addRestaurant extends Activity {
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
+            Boolean check = true;
+
+
             @Override
             public void onClick(View v) {
 
-                String name = nameTextView.getText()+"";
-                String address = addressTextView.getText()+"";
-                String rating = ratingTextView.getText()+"";
+                if(nameTextView.getText().toString().isEmpty()){
+                    check = false;
+                    nameTextView.setBackgroundColor(Color.parseColor("#e89795"));
+                }
 
 
-                WriteToFile(ID,name,address,rating);
+                if(check == true){
 
-                Intent intent = new Intent(context, FileActivity.class);
-                startActivity(intent);
+                    String name = nameTextView.getText()+"";
+                    String address = addressTextView.getText()+"";
+                    String rating = ratingTextView.getText()+"";
 
-                finish();
+
+                    WriteToFile(ID,name,address,rating);
+
+                    Intent intent = new Intent(context, FileActivity.class);
+                    startActivity(intent);
+
+                    finish();
+
+                }
+
+
             }
 
         });
@@ -148,6 +164,8 @@ public class addRestaurant extends Activity {
         }
 
     }
+
+
 
 
 
