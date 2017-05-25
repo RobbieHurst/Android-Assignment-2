@@ -110,7 +110,7 @@ public class addGame extends Activity {
                     finish();
 
                 }
-                
+
             }
 
         });
