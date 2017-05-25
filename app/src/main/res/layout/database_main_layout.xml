@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="+"
         android:textColor="#ffffff"
-        android:background="@drawable/round"
+        android:background="@drawable/accept_round"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="5dp"

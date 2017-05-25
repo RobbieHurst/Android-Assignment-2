@@ -7,10 +7,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +22,18 @@ public class DBMainActivity extends Activity {
 
     //Declerations
     DBAdapter dbAdapter;
-    EditText nameOfTeamEdt;
-    EditText positionEdt;
-    EditText pointsEdt;
-    EditText idEdt;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
     private List<Game> list = new ArrayList<Game>();
     Button addButton;
+
+    public static String SELECTED_ID;
+    public static String SELECTED_NAME;
+    public static String SELECTED_PUBLISHER;
+    public static String SELECTED_RATING;
+    public static String ISSELECTED;
 
 
     @Override
@@ -51,6 +52,12 @@ public class DBMainActivity extends Activity {
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
+        SELECTED_ID = "";
+        SELECTED_NAME = "";
+        SELECTED_PUBLISHER = "";
+        SELECTED_RATING = "";
+        ISSELECTED = "true";
+
         addListenerOnButton();
 
     }
@@ -67,17 +74,45 @@ public class DBMainActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, addGame.class);
-//                intent.putExtra(SELECTED_ID, getLastId());
-//                intent.putExtra(SELECTED_NAME, "");
-//                intent.putExtra(SELECTED_ADDRESS,"");
-//                intent.putExtra(SELECTED_RATING, "");
-//                intent.putExtra(ISSELECTED,"false");
+                intent.putExtra(SELECTED_NAME, "");
+                intent.putExtra(SELECTED_PUBLISHER,"");
+                intent.putExtra(SELECTED_RATING, "");
+                intent.putExtra(ISSELECTED,"false");
                 startActivity(intent);
                 finish();
 
             }
 
         });
+
+    }@Override
+    protected void onResume() {
+        super.onResume();
+        ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.i(LOG_TAG, " Clicked on Item " + position);
+                SELECTED_ID = list.get(position).getID();
+                SELECTED_NAME = list.get(position).getName();
+                SELECTED_PUBLISHER = list.get(position).getPublisher();
+                SELECTED_RATING = list.get(position).getRating()+"";
+                ISSELECTED = "true";
+                itemTap();
+            }
+        });
+    }
+    public void itemTap(){
+
+        Intent intent = new Intent(this, addGame.class);
+        intent.putExtra(SELECTED_ID, SELECTED_ID);
+        intent.putExtra(SELECTED_NAME, SELECTED_NAME);
+        intent.putExtra(SELECTED_PUBLISHER,SELECTED_PUBLISHER);
+        intent.putExtra(SELECTED_RATING, SELECTED_RATING);
+        intent.putExtra(ISSELECTED,ISSELECTED);
+        startActivity(intent);
+        finish();
+
 
     }
     private ArrayList<DataObject> getDataSet() {
@@ -104,6 +139,7 @@ public class DBMainActivity extends Activity {
 
             Game game = new Game();
 
+            game.setID(cursor.getString(cursor.getColumnIndex("_id")));
             game.setName(cursor.getString(cursor.getColumnIndex("gameName")));
             game.setPublisher(cursor.getString(cursor.getColumnIndex("publisher")));
             game.setRating(cursor.getString(cursor.getColumnIndex("rating")));

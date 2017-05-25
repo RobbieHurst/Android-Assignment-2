@@ -55,6 +55,12 @@ public class FileActivity extends Activity {
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
+        SELECTED_ID = "";
+        SELECTED_NAME = "";
+        SELECTED_ADDRESS = "";
+        SELECTED_RATING = "";
+        ISSELECTED = "true";
+
         addListenerOnButton();
 
 

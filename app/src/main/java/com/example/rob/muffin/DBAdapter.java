@@ -73,6 +73,9 @@ public class DBAdapter {
     }
 
     public long insertGame(String name, String publisher, String rating) {
+
+        open();
+
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_GAME_NAME, name);
         initialValues.put(KEY_RATING, rating);
@@ -82,6 +85,8 @@ public class DBAdapter {
 
     public boolean deleteTeam(long rowId)
     {
+        open();
+
         return db.delete(DATABASE_TABLE, KEY_ROWID + "=" + rowId, null) > 0;
     }
 
@@ -92,25 +97,15 @@ public class DBAdapter {
                 KEY_PUBLISHER, KEY_RATING}, null, null, null, null, null);
     }
 
-    public Cursor getTeam(long rowId) throws SQLException
-    {
-        Cursor mCursor = db.query(true, DATABASE_TABLE, new String[] {KEY_ROWID,
-                        KEY_GAME_NAME, KEY_PUBLISHER, KEY_RATING}, KEY_ROWID + "="+rowId,
-                null, null, null, null, null);
-        if (mCursor != null){
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-    }
     public boolean updateTeam(long rowId, String name, String pos, String points)
     {
+        open();
+
         ContentValues args = new ContentValues();
         args.put(KEY_GAME_NAME,name);
         args.put(KEY_RATING,points);
         args.put(KEY_PUBLISHER,pos);
         return db.update(DATABASE_TABLE, args,KEY_ROWID + "=" + rowId, null) > 0;
     }
-
-
 
 }

@@ -25,6 +25,7 @@ public class addRestaurant extends Activity {
     TextView nameTextView;
     TextView addressTextView;
     TextView ratingTextView;
+    TextView titleTextView;
     String newRecord;
 
     @Override
@@ -33,6 +34,8 @@ public class addRestaurant extends Activity {
         setContentView(R.layout.add_restaurant_layout);
 
         Intent intent = getIntent();
+
+        titleTextView = (TextView) findViewById(R.id.textViewTitle);
 
         String name = intent.getStringExtra(FileActivity.SELECTED_NAME);
         String address = intent.getStringExtra(FileActivity.SELECTED_ADDRESS);
@@ -50,6 +53,12 @@ public class addRestaurant extends Activity {
         ratingTextView = (TextView) findViewById(R.id.edtRating);
         ratingTextView.setText(rating);
 
+        if(newRecord.equals("true")){
+
+            titleTextView.setText("View Review");
+
+        }
+
         addListenerOnButton();
 
     }
@@ -59,6 +68,10 @@ public class addRestaurant extends Activity {
 
         addButton = (Button) findViewById(R.id.btnAdd);
         cancelButton = (Button) findViewById(R.id.btnCancel);
+
+        if(newRecord.equals("true")){
+            cancelButton.setText("Back");
+        }
 
         addButton.setOnClickListener(new View.OnClickListener() {
 

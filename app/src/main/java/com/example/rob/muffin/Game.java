@@ -6,6 +6,7 @@ package com.example.rob.muffin;
 
 public class Game {
 
+    private String ID;
     private String name;
     private String publisher;
     private String rating;
@@ -32,5 +33,13 @@ public class Game {
 
     public void setRating(String rating) {
         this.rating = rating;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 }
