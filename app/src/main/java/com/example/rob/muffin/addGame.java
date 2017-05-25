@@ -132,7 +132,7 @@ public class addGame extends Activity {
 
                 if(cancelButton.getText().equals("Delete")){
 
-                    dbAdapter.deleteTeam(Long.parseLong(ID));
+                    dbAdapter.deleteGame(Long.parseLong(ID));
 
                     Intent intent = new Intent(context, DBMainActivity.class);
                     startActivity(intent);

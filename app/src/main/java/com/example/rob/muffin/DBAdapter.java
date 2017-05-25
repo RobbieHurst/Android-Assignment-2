@@ -83,7 +83,7 @@ public class DBAdapter {
         return db.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean deleteTeam(long rowId)
+    public boolean deleteGame(long rowId)
     {
         open();
 
