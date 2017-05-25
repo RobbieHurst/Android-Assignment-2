@@ -3,11 +3,101 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView1"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I&apos;m screen 3 (main2.xml)"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edtID"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter id only when Updating/Deleting"
+        />
+
+
+    <Button
+        android:text="ADD TEAM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="11dp"
+        android:id="@+id/AddTeam"
+        android:layout_alignEnd="@+id/edtID"
+        android:onClick="AddGameTap"/>
+
+    <Button
+        android:text="EDIT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AddTeam"
+        android:layout_alignStart="@+id/AddTeam"
+        android:id="@+id/Edit"
+        android:layout_alignEnd="@+id/AddTeam"
+        android:onClick="EditTeamGame"/>
+
+    <Button
+        android:text="SEARCH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Edit"
+        android:layout_alignEnd="@+id/Edit"
+        android:id="@+id/Search"
+        android:layout_alignStart="@+id/Edit"
+        android:onClick="SearchGameTap"/>
+
+    <Button
+        android:text="DELETE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Search"
+        android:layout_alignStart="@+id/Search"
+        android:id="@+id/Delete"
+        android:layout_alignEnd="@+id/Search"
+        android:onClick="DeleteGameTap"/>
+
+    <Button
+        android:text="SHOW ALL TEAMS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ShowTeams"
+        android:layout_below="@+id/Delete"
+        android:layout_alignStart="@+id/Delete"
+        android:layout_alignEnd="@+id/Delete"
+        android:onClick="ShowGameTap"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edtTeamName"
+        android:layout_below="@+id/edtID"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Name"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edtPosition"
+        android:layout_below="@+id/edtTeamName"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Position"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/edtPoints"
+        android:layout_below="@+id/edtPosition"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Points"
+        />
 
 </LinearLayout>
