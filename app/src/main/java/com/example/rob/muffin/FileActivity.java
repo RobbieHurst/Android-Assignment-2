@@ -70,7 +70,7 @@ public class FileActivity extends Activity {
 
         try{
 
-            fileRead = new BufferedReader(new InputStreamReader(getAssets().open("Restaurant")));
+            fileRead = new BufferedReader(new InputStreamReader(getAssets().open("Restaurant.txt")));
 
             while((line = fileRead.readLine()) != null){
                 textFileData += line + "\n";
