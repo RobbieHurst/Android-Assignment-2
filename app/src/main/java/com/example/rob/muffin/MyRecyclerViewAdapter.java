@@ -17,21 +17,21 @@ public class MyRecyclerViewAdapter extends RecyclerView
         .Adapter<MyRecyclerViewAdapter
         .DataObjectHolder> {
     private static String LOG_TAG = "MyRecyclerViewAdapter";
-    private ArrayList<DataObject> mDataset;
+    private ArrayList<DataObject> mDataset;         //Declaration of variables for card views.
     private static MyClickListener myClickListener;
 
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
         TextView labelName;
-        TextView labelAddress;
+        TextView labelAddress;      //Variables for TextViews.
         TextView labelRating;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
             labelName = (TextView) itemView.findViewById(R.id.textView);
             labelAddress = (TextView) itemView.findViewById(R.id.textView2);
-            labelRating = (TextView) itemView.findViewById(R.id.textView3);
+            labelRating = (TextView) itemView.findViewById(R.id.textView3);     //Datholder for generic object.
             Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -43,7 +43,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
+        this.myClickListener = myClickListener;             //Adding on click.
     }
 
     public MyRecyclerViewAdapter(ArrayList<DataObject> myDataset) {
@@ -63,7 +63,7 @@ public class MyRecyclerViewAdapter extends RecyclerView
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
         holder.labelName.setText(mDataset.get(position).getmText1());
-        holder.labelAddress.setText(mDataset.get(position).getmText2());
+        holder.labelAddress.setText(mDataset.get(position).getmText2());        //Binding the holder.
         holder.labelRating.setText(mDataset.get(position).getmText3());
     }
 

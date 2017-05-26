@@ -8,7 +8,7 @@ public class Restaurant {
 
     private String id;
     private String Name;
-    private String Address;
+    private String Address;     //Declaration of variables.
     private int Rating;
 
     public Restaurant(){
@@ -18,14 +18,14 @@ public class Restaurant {
 
         this.id = id;
         this.Name = Name;
-        this.Address = Address;
+        this.Address = Address;         //Constructor.
         this.Rating = Rating;
     }
 
 
     public String getId() {
         return id;
-    }
+    }       //Getters and Setters.
 
     public void setId(String id) {
         this.id = id;

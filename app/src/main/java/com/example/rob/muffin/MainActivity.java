@@ -10,14 +10,15 @@ import android.view.View.OnClickListener;
 
 public class MainActivity extends Activity {
 
-    Button button;
+    Button button;          //Declaration of variables.
     Button secondButton;
+    Button thirdButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addListenerOnButton();
+        addListenerOnButton();      //Adding listener
     }
 
     public void addListenerOnButton() {
@@ -26,11 +27,12 @@ public class MainActivity extends Activity {
 
         button = (Button) findViewById(R.id.button1);
         secondButton = (Button) findViewById(R.id.button2);
+        thirdButton = (Button) findViewById(R.id.button3);
 
         button.setOnClickListener(new OnClickListener() {
 
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View arg0) {        //Creating intents.
 
                 Intent intent = new Intent(context, FileActivity.class);
                 startActivity(intent);
@@ -46,6 +48,15 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        thirdButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Help.class);
+                startActivity(intent);
+            }
+        });
+
 
     }
 }

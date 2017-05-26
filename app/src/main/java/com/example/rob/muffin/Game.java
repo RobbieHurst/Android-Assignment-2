@@ -7,13 +7,13 @@ package com.example.rob.muffin;
 public class Game {
 
     private String ID;
-    private String name;
+    private String name;            //Declaration of variables.
     private String publisher;
     private String rating;
 
     public String getName() {
         return name;
-    }
+    }           //Getters and Setters.
 
     public void setName(String name) {
         this.name = name;

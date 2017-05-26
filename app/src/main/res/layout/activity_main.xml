@@ -48,10 +48,17 @@
                 android:textColor="#ffffff"
                 android:text="Database"/>
 
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/round"
+                android:textColor="#ffffff"
+                android:text="Help"
+                android:layout_marginTop="50dp"/>
+
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 

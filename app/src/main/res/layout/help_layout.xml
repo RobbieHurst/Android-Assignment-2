@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorTitle"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:textStyle="bold"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Both systems Utilize a CardView System."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="left"
+            android:layout_marginTop="50dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Which Allows the user to select an Item by Taping on an Item."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Add an Item press the Green Plus."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccept"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Located on the bottom Right of the Screen."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccept"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="On the Next Screen Type in your specified details and press 'Accept' to add to list."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccept"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To Go back Or Delete a Record. Look for the Cancel or Delete Button in the Details Screen."
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorCancel"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>

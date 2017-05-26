@@ -35,6 +35,11 @@
             android:label="@string/app_name"
             android:name=".addGame" >
         </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".Help" >
+        </activity>
+
     </application>
 
 </manifest>

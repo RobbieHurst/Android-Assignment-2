@@ -25,16 +25,16 @@ import java.util.List;
 public class FileActivity extends Activity {
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.Adapter mAdapter;          //Declaration of variables that are used for recycling views
     private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
+    private static String LOG_TAG = "Restaurant View";
     private List<Restaurant> list = new ArrayList<Restaurant>();
     public static String SELECTED_ID;
-    public static String SELECTED_NAME;
+    public static String SELECTED_NAME;     //Intent Variables.
     public static String SELECTED_ADDRESS;
     public static String SELECTED_RATING;
     public static String ISSELECTED;
-    Button addButton;
+    Button addButton;           //Button
 
 
     @Override
@@ -42,22 +42,22 @@ public class FileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.file_layout);
 
-        readFromFile(this);
+        readFromFile(this);         //Reading from the file.
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(mLayoutManager);         //Layout managers for Card Views.
         mAdapter = new MyRecyclerViewAdapter(getDataSet());
         mRecyclerView.setAdapter(mAdapter);
 
         SELECTED_ID = "";
         SELECTED_NAME = "";
-        SELECTED_ADDRESS = "";
+        SELECTED_ADDRESS = "";      //Making intent variables blank.
         SELECTED_RATING = "";
         ISSELECTED = "true";
 
-        addListenerOnButton();
+        addListenerOnButton();      //Adding listener on buttons.
 
 
     }
@@ -67,14 +67,14 @@ public class FileActivity extends Activity {
         ((MyRecyclerViewAdapter) mAdapter).setOnItemClickListener(new MyRecyclerViewAdapter
                 .MyClickListener() {
             @Override
-            public void onItemClick(int position, View v) {
+            public void onItemClick(int position, View v) {         //Adding on click listeners to the Items.
                 Log.i(LOG_TAG, " Clicked on Item " + position);
                 SELECTED_ID = list.get(position).getId();
                 SELECTED_NAME = list.get(position).getName();
-                SELECTED_ADDRESS = list.get(position).getAddress();
+                SELECTED_ADDRESS = list.get(position).getAddress();     //Adding the data from selected
                 SELECTED_RATING = list.get(position).getRating()+"";
                 ISSELECTED = "true";
-                itemTap();
+                itemTap();      //Calling Item tap method.
             }
         });
     }
@@ -83,17 +83,17 @@ public class FileActivity extends Activity {
         Intent intent = new Intent(this, addRestaurant.class);
         intent.putExtra(SELECTED_ID, SELECTED_ID);
         intent.putExtra(SELECTED_NAME, SELECTED_NAME);
-        intent.putExtra(SELECTED_ADDRESS,SELECTED_ADDRESS);
+        intent.putExtra(SELECTED_ADDRESS,SELECTED_ADDRESS);     //Adding the intent variables.
         intent.putExtra(SELECTED_RATING, SELECTED_RATING);
         intent.putExtra(ISSELECTED,ISSELECTED);
         startActivity(intent);
-        finish();
+        finish();       //Closing Intent.
 
 
     }
     public String getLastId(){
 
-        String ID = "";
+        String ID = "";         //Getting the last id to add.
 
         for(int i = 0; i < list.size(); i++){
 
@@ -108,7 +108,7 @@ public class FileActivity extends Activity {
 
         final Context context = this;
 
-        addButton = (Button) findViewById(R.id.btnAdd);
+        addButton = (Button) findViewById(R.id.btnAdd);     //Finding add button.
 
         addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -116,9 +116,9 @@ public class FileActivity extends Activity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(context, addRestaurant.class);
-                intent.putExtra(SELECTED_ID, getLastId());
-                intent.putExtra(SELECTED_NAME, "");
-                intent.putExtra(SELECTED_ADDRESS,"");
+                intent.putExtra(SELECTED_ID, getLastId());                  //Sending blank variables.
+                intent.putExtra(SELECTED_NAME, "");                         //creating intent.
+                intent.putExtra(SELECTED_ADDRESS,"");                       //Closing intent.
                 intent.putExtra(SELECTED_RATING, "");
                 intent.putExtra(ISSELECTED,"false");
                 startActivity(intent);
@@ -130,12 +130,12 @@ public class FileActivity extends Activity {
 
     }
 
-    private ArrayList<DataObject> getDataSet() {
+    private ArrayList<DataObject> getDataSet() {                //Dataset that will loop through the lit and make generic object to populate card views.
         ArrayList results = new ArrayList<DataObject>();
         for (int index = 0; index < list.size(); index++) {
 
             String name = list.get(index).getName();
-            String address = list.get(index).getAddress();
+            String address = list.get(index).getAddress();      //Assigning local variables.
             String rating = list.get(index).getRating()+"";
 
             DataObject obj = new DataObject("Name: "+name,"Address: "+ address,"Rating: "+ rating);
@@ -143,40 +143,41 @@ public class FileActivity extends Activity {
         }
         return results;
     }
+            //Method that will read from file.
     public void readFromFile(Context context){
 
-        BufferedReader fileRead = null;
-        String line;
+        BufferedReader fileRead = null;     //Declaration of buffered reader.
+        String line;        //Line
 
         try{
 
-            InputStream inputStream = context.openFileInput("Restaurant.txt");
+            InputStream inputStream = context.openFileInput("Restaurant.txt");      //Opening the file to read.
 
-            if( inputStream != null ){
+            if( inputStream != null ){      //If the stream is null.
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 line = "";
 
-                StringBuilder stringBuilder = new StringBuilder();
+                //StringBuilder stringBuilder = new StringBuilder();
 
                 while ((line = bufferedReader.readLine()) != null){
 
-                    String[] var = line.split(",");
+                    String[] var = line.split(",");         //Splitting the line.
 
                     Restaurant restaurant = new Restaurant();
 
-                    restaurant.setId(var[0]);
+                    restaurant.setId(var[0]);       //Creating the object.
                     restaurant.setName(var[1]);
                     restaurant.setAddress(var[2]);
                     restaurant.setRating(Integer.parseInt(var[3]));
 
-                    list.add(restaurant);
+                    list.add(restaurant); //Adding objet to list.
 
                 }
 
             }
 
-            Toast.makeText(this, "File Read Successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "File Read Successfully", Toast.LENGTH_LONG).show(); //Toast for success.
 
         }
         catch (IOException error){
