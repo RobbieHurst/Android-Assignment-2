@@ -84,10 +84,6 @@
             android:layout_gravity="left"
             android:layout_marginTop="10dp" />
 
-
-
-
-
         </LinearLayout>
 
 
