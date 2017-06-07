@@ -56,7 +56,22 @@ public class addRestaurant extends Activity {
 
         if(newRecord.equals("true")){
 
-            titleTextView.setText("View Review");           //Changing title if it is not new record.
+            titleTextView.setText("View Review");
+
+            nameTextView.setFocusable(false);
+            nameTextView.setEnabled(false);
+            nameTextView.setClickable(false);
+            nameTextView.setFocusableInTouchMode(false);
+
+            addressTextView.setFocusable(false);
+            addressTextView.setEnabled(false);
+            addressTextView.setClickable(false);
+            addressTextView.setFocusableInTouchMode(false);
+
+            ratingTextView.setFocusable(false);
+            ratingTextView.setEnabled(false);
+            ratingTextView.setClickable(false);
+            ratingTextView.setFocusableInTouchMode(false);
 
         }
 
